@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+model User {
+  //coluna de identificação única 
+  //o id representa cada usuário 
+  // a string define que ele é um texto
+  //id @id -> chave primária
+  // @default(uuid()) -> gera um id automático no formato uuid
+  
+  id String @id @default(uuid())
+  name String
+  email String @unique
+
+//como eu quero que a tabela seja chamada dentro do banco de dados 
+  @@map("users")
+}
