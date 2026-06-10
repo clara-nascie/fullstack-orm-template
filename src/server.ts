@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express"
 import 'express-async-errors'
 
 import { routes } from "./routes"
+import { prisma } from "./prisma"
 
 const PORT = 3334
 const app = express()
@@ -14,3 +15,13 @@ app.use((error: any, request: Request, response: Response, _: NextFunction) => {
 })
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+
+process.on("SIGINT", async () => {
+  await prisma.$disconnect()
+  process.exit(0)
+})
+
+process.on("SIGTERM", async () => {
+  await prisma.$disconnect()
+  process.exit(0)
+})

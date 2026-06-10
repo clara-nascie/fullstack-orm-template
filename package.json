@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predev": "npx kill-port 3334",
     "dev": "tsx watch src/server.ts"
   },
   "license": "ISC",
