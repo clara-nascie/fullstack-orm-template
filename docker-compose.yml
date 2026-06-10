@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: bitnami/postgresql:latest
+    container_name: fullstack-orm-db
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=api
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/bitnami/postgresql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fullstack-orm-api
+    ports:
+      - "3334:3334"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/api?schema=public
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/app
+      - /app/node_modules # Avoids overwriting container node_modules with host node_modules
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

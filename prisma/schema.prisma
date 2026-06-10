@@ -19,6 +19,9 @@ model User {
   name String
   email String @unique
 
+//um usuario pode ter varias perguntas 
+  questions Question[]
+
 //como eu quero que a tabela seja chamada dentro do banco de dados 
   @@map("users")
 }
@@ -32,6 +35,10 @@ model Question {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   userId String @map("user_id")
+
+//define que a coluna user_id é uma chave estrangeira que referencia a tabela users na coluna id
+//preciso falar la em user que um usuario pode ter varias perguntas 
+  user User @relation(fields: [userId], references: [id])
 
   //relacionamento 
   @@map("questions")
