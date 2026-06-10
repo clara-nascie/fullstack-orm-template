@@ -9,6 +9,10 @@ class QuestionsController {
           contains: request.query.title?.toString().trim(),
           mode: 'insensitive',
         }
+      },
+      //ordenar de forma decrescente pela data que foi criada
+      orderBy: {
+        createdAt: 'desc',
       }
     })
     
@@ -30,11 +34,30 @@ class QuestionsController {
   }
 
   async update(request: Request, response: Response) {
-    return response.json()
+    const {id} = request.params
+    const {title,content} = request.body
+
+    const question = await prisma.question.update({
+      data: {
+        title,
+        content
+      },
+      where: {
+        id,
+      }
+    })
+    return response.json(question)
   }
 
   async remove(request: Request, response: Response) {
-    return response.json()
+    const {id} = request.params
+
+    await prisma.question.delete({
+      where: {
+        id,
+      }
+    })
+    return response.status(204).json()
   }
 }
 
