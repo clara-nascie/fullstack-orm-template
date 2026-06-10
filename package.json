@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "predev": "npx kill-port 3334",
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+
+    "prisma:seed": "tsx prisma/seed.ts"
+    
   },
   "license": "ISC",
   "dependencies": {
@@ -22,5 +25,8 @@
     "@types/node": "^22.5.4",
     "@types/pg": "^8.20.0",
     "typescript": "^5.6.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
